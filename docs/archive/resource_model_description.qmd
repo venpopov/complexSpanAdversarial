@@ -1,0 +1,330 @@
+---
+title: "Initial model predictions"
+author: "Ven Popov"
+date: "2023-08-30"
+date-modified: "2023-08-30"
+---
+
+{{< include ../_deprecated.qmd >}}
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(rtdists)
+library(here)
+```
+
+## Explanation of the model and model code
+
+This is a simplified version of the resource model. All results below are simulated from the following functions. The model works as follows. Any WM trial begins with maximum resources R=1. The encoding of items and distractors each deplete a certain proportion of the currently available resources. Encoding of items depletes `pMem` proportion of resources, while the encoding of distractors depletes `pTone` proportion of resources, where `pTone` is assumed to be less than `pMem`. Resources recover as a linear function of time with rate of `rate` resources/second. The strength of the encoded item or tone is equal to `pMem * R_available` and of tones to `pTone * R_available`. For example, we start with R=1, and then the first item depletes 50% of available resources (pMem = 0.5), so it's strength is `0.5*1=0.5`. Then a tone is presented is 1.5 sec after the memory item onset. In that time resources have recovered to `0.5 + 1.5*0.1= 0.65`. The tone depletes `0.1*0.65=0.065` resources, and leaves `0.585` available, etc. Because each memory item depletes more resources than what can be recovered during the ISI, each "load" tone is encoded less and less well. In contrast, during the retention interval no memory items are encoding, and the encoding rate of tone items is less than the recovery rate, so each subsequent tone is encoded more strongly. Finally, tone judgement RTs are modeled as a drift diffusion process with the drift rate being proportional to the encoding strength of the tone item. The only adjustment to RTs that doesn't come from the model is a constant added to the initial lead-in judgement to reflect switching costs. Everything else is simulated from the model.
+
+The function below is given as an input the three learning and recovery parameters, then the details of the study procedure (number of leadin items, setsize, number of lead out items, timing parameters for the presentation) and a couple of scaling parameters for the diffusion model. Then it outputs memory strength values for each memory item and each probe item, as well as RT predictions for the tone judgements.
+
+I did not fit the model to the data, but rather chose a set of parameters that give a good approximation (for simplicity; for the eventual paper I should fit the model properly).
+
+
+```{r}
+sim_data <- function(pMem=0.5, pTone=0.1, rate=0.05, 
+                     leadin_n = 4, 
+                     setsize = 7,
+                     leadout_n = 8,
+                     mem_duration = 1,
+                     mem_tone_ISI = 0.5,
+                     tone_duration = 0.75+0.25,
+                     decision_time = 0.8,
+                     tone_mem_ISI = 0.5,
+                     a=2, vc=40) {
+  
+  # get_resources <- function(R_prev, p, rate, ti) {
+  #   R = 1 - (1-(1-p)*R_prev)*exp(-rate*ti) 
+  #   return(R)
+  # }
+  
+  # function calculating amount of remaining resources after depletion and recovery
+  get_resources_lin <- function(R_prev, p, rate, ti) {
+    R = sapply(ti, function(x) min(1, (1-p)*R_prev + rate*x))
+    return(R)
+  }
+  
+  # function constructs a sequence of expeirmental events based on experimental parameters
+  gen_exp_info <- function() {
+    trial_seq = c(rep('tone', times=leadin_n),
+                  rep(c('mem','tone'), times=setsize), 
+                  rep('tone', times=leadout_n))
+    ps = ifelse(trial_seq == "mem", pMem, pTone)
+    trial_times = c(0,
+                    rep(tone_duration+decision_time+tone_mem_ISI, times=leadin_n),
+                    rep(c(mem_duration+mem_tone_ISI, tone_duration+decision_time+tone_mem_ISI), times=setsize), 
+                    rep(tone_duration+decision_time+tone_mem_ISI, times=leadout_n))
+    return(list(trial_seq=trial_seq, ps=ps, trial_times=trial_times))
+  }
+  
+  # function generates encoding strength values based on learning parameters and amount of available resources
+  gen_strength <- function() {
+    
+    strengths = c()
+    Rs = c()
+    R = 1
+    for (i in 1:length(exp_info$trial_seq)) {
+      p_prev = ifelse(i==1, 0, exp_info$ps[i-1])
+      R = get_resources_lin(R, p_prev, rate, exp_info$trial_times[i])
+      Rs = c(Rs, R)
+      strengths <- c(strengths, R*exp_info$ps[i])
+      i=i+1
+    }
+    return(list(strengths=strengths, Rs=Rs))
+  }
+  
+  
+  extract_tone_strengths <- function(strengths) {
+    strengths[exp_info$trial_seq=='tone']
+  }
+  
+  # generate RTs based on a drift diffusion process from the encoding strnegth as a drift rate.
+  gen_tone_rts <- function(strengths) {
+    sapply(strengths, function(x) qdiffusion(0.5, a=a, v=vc*x, t0=0.2))
+  }  
+  
+  
+  ## run simulation with default parameter
+  exp_info = gen_exp_info()
+  sim = gen_strength()
+  all_s = sim$strengths
+  tone_s = extract_tone_strengths(all_s)
+  rts = gen_tone_rts(tone_s)
+  pars = list(pMem=pMem, pTone=pTone, rate=rate,
+              leadin_n=leadin_n, setsize=setsize, leadout_n=leadout_n,
+              mem_duration=mem_duration, mem_tone_ISI = mem_tone_ISI,
+              tone_duration=tone_duration, decision_time=decision_time,
+              tone_mem_ISI = tone_mem_ISI)
+  return(list(exp_info=exp_info, all_s=all_s, tone_s=tone_s, rts=rts, Rs=sim$Rs, pars=pars))
+}
+```
+
+## Simulations of existing data
+
+Here's the overall initial simulation to show that the model captures the pattern presented in Joseph and Morey (2021). Memory items deplete 30% of resources, tones deplete 10% of resources, and the resource recovers at a rate of 0.05 per second. The model simulation captures all major aspects of the data.
+
+```{r}
+simdat <- sim_data(pMem=0.3, pTone=0.1, rate=0.05, a=3, v=40)
+dat <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('Load-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('Load', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s)
+dat$pos = 1:nrow(dat)
+
+dat$rts[1] = dat$rts[1]+0.3
+
+
+ggplot(dat, aes(pos, rts, group=type)) +
+  geom_point() +
+  geom_line() +
+  scale_x_continuous("Serial position", labels=dat$type_pos, breaks=1:nrow(dat)) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5)) +
+  scale_y_continuous("Mean Response Time")
+
+ggsave(here('figures/sac_jm2021_simulation.png'), width=6, height=4, units='in')
+```
+
+The model also predicts that the lead-out judgements should be overall faster with smaller setsizes, as shown in Figure 6 of Joseph and Morey (2021)
+
+
+```{r}
+dat <- data.frame()
+for (setsize in c(4,6)) {
+  simdat <- sim_data(pMem=0.3, rate=0.06, a=4, v=40, leadout_n=4,  setsize=setsize)
+  DAT <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('Load-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('Load', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  pos = c(-sort(1:simdat$pars$leadin_n, decreasing = T),
+                          1:simdat$pars$setsize,
+                          8:(7+simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s,
+                  setsize = simdat$pars$setsize)
+  DAT$rts[1] = DAT$rts[1]+0.3
+  dat <- bind_rows(dat,DAT)
+}
+
+
+
+ggplot(dat, aes(pos, rts, group=interaction(type, setsize), color=as.factor(setsize))) +
+  geom_point() +
+  geom_line() +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5)) +
+  coord_cartesian(ylim=c(0.6,1.3))
+```
+
+## Predictions for the running span experiment
+
+In the model the running span task is implemented during encoding exactly the same as the simple span task - each item depletes resources regardless of whether the items is in position less or larger than the recall span. The model predicts that RTs gradualy get less and less of decrement with each serial position, but they never completely asymptote (at least not with up to 10 items). On the plot below there is only one line during the load judgements because the smaller setsizes lines overlap completely.
+
+```{r}
+dat <- data.frame()
+for (setsize in c(4,6,8,10)) {
+  simdat <- sim_data(pMem=0.3, a=3, v=40, leadout_n=8,  setsize=setsize)
+  DAT <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('Load-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('Load', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  pos = c(-sort(1:simdat$pars$leadin_n, decreasing = T),
+                          1:simdat$pars$setsize,
+                          11:(10+simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s,
+                  setsize = simdat$pars$setsize)
+  DAT$rts[1] = DAT$rts[1]+0.3
+  dat <- bind_rows(dat,DAT)
+}
+
+
+
+ggplot(dat, aes(reorder(type_pos,pos), rts, group=interaction(type, setsize), color=as.factor(setsize))) +
+  geom_point() +
+  geom_line() +
+  # scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5))
+```
+
+```{r}
+dat <- data.frame()
+for (setsize in c(2:7)) {
+  simdat <- sim_data(pMem=0.3, a=3, v=40, leadout_n=8,  setsize=setsize)
+  DAT <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('List-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('List', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  pos = c(-sort(1:simdat$pars$leadin_n, decreasing = T),
+                          1:simdat$pars$setsize,
+                          11:(10+simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s,
+                  setsize = simdat$pars$setsize)
+  DAT$rts[1] = DAT$rts[1]+0.3
+  dat <- bind_rows(dat,DAT)
+}
+
+
+
+dat %>% 
+  filter(type != "Lead-out") %>% 
+  ggplot(aes(reorder(type_pos,pos), rts*1000, group=interaction(type, setsize), color=as.factor(setsize))) +
+  geom_point() +
+  geom_line() +
+  # scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) + +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5)) +
+  scale_y_continuous("Mean Response Time") +
+  scale_color_discrete('List Length') +
+  scale_x_discrete('Serial Position')
+
+ggsave(here('figures/resource_predictions.png'), width=5, height=3, units='in')
+```
+
+One potential complication we discussed is that Klaus has found that he can model the running span task with a resource recovery model if he assumes that people encode items in the running span task more passively, which results in a lower depletion rate (i.e., smaller pMem parameter). I next ran the model with a range of pMem values, to make sure that the same predictions are carried out regardless if people deplete less resources in the running span task. The next simulation varies pMem from 0.15 to 0.35. We can see that this shifts the RTs up and down but doesn't change the shape of the function much. With lower learning rate, there is less of a decrement on tone RTs, but tone RTs still slow down with each item added to memory. The effect will only disappear if the learning rate gets down to 0.08
+
+```{r}
+dat <- data.frame()
+for (pmem in c(0.08, 0.15, 0.2,0.25, 0.3, 0.35)) {
+  simdat <- sim_data(pMem=pmem, a=3, v=40, leadout_n=8,  setsize=10)
+  DAT <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('Load-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('Load', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  pos = c(-sort(1:simdat$pars$leadin_n, decreasing = T),
+                          1:simdat$pars$setsize,
+                          11:(10+simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s,
+                  pmem = pmem)
+  DAT$rts[1] = DAT$rts[1]+0.3
+  dat <- bind_rows(dat,DAT)
+}
+
+
+
+ggplot(dat, aes(reorder(type_pos,pos), rts, group=interaction(type, pmem), color=as.factor(pmem))) +
+  geom_point() +
+  geom_line() +
+  # scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5))
+```
+
+## Predictions about ISI experiment
+
+The model predicts that if we increase either the item-to-tone ISI, or the tone-to-item ISI, we should get less slow down with each item, because resources would have recovered more:
+
+
+```{r}
+dat <- data.frame()
+for (memtoneISI in c(0.1,0.3,0.5,0.7,0.9,1.5,2)) {
+  simdat <- sim_data(pMem=0.3, a=3, v=40, leadout_n=8,  setsize=10, mem_tone_ISI = memtoneISI)
+  DAT <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('Load-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('Load', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  pos = c(-sort(1:simdat$pars$leadin_n, decreasing = T),
+                          1:simdat$pars$setsize,
+                          11:(10+simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s,
+                  mem_tone_ISI = memtoneISI)
+  DAT$rts[1] = DAT$rts[1]+0.3
+  dat <- bind_rows(dat,DAT)
+}
+
+
+
+ggplot(dat, aes(reorder(type_pos,pos), rts, group=interaction(type, mem_tone_ISI), color=as.factor(mem_tone_ISI))) +
+  geom_point() +
+  geom_line() +
+  # scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5))
+```
+
+
+```{r}
+dat <- data.frame()
+for (tonememISI in c(0.1,0.3,0.5,0.7,0.9,1.5,2)) {
+  simdat <- sim_data(pMem=0.3, a=3, v=40, leadout_n=8,  setsize=10, tone_mem_ISI = tonememISI)
+  DAT <- data.frame(type_pos = c(paste0('Lead-in-',sort(1:simdat$pars$leadin_n, decreasing = T)),
+                               paste0('Load-', 1:simdat$pars$setsize),
+                               paste0('Lead-out-', 1:simdat$pars$leadout_n)),
+                  type = c(rep('Lead-in', simdat$pars$leadin_n),
+                           rep('Load', simdat$pars$setsize),
+                           rep('Lead-out', simdat$pars$leadout_n)),
+                  pos = c(-sort(1:simdat$pars$leadin_n, decreasing = T),
+                          1:simdat$pars$setsize,
+                          11:(10+simdat$pars$leadout_n)),
+                  rts = simdat$rts,
+                  strength = simdat$tone_s,
+                  tone_mem_ISI = tonememISI)
+  DAT$rts[1] = DAT$rts[1]+0.3
+  dat <- bind_rows(dat,DAT)
+}
+
+
+
+ggplot(dat, aes(reorder(type_pos,pos), rts, group=interaction(type, tone_mem_ISI), color=as.factor(tone_mem_ISI))) +
+  geom_point() +
+  geom_line() +
+  # scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +
+  theme(axis.text.x = element_text(angle=60, vjust=0.5))
+```
+
+The only difference is that if we increase the item-to-tone ISI, we also get an effect on the first tone, but we increase the tone-to-item ISI we only get effects on the subsequent tones. In contrast, I think that the reconfiguration hypothesis would predict that only increasing the mem-to-tone ISI should decrease the slow-down rate of tone_judgements with each serial positions, but that there should be no effect of the tone_to_mem ISI.

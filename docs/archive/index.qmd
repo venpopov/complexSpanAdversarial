@@ -1,0 +1,6 @@
+---
+title: "Archived scripts"
+format: html
+---
+
+{{< include ../_deprecated.qmd >}}

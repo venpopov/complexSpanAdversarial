@@ -1,0 +1,3 @@
+::: {.callout-note}
+These are legacy analyses scripts from my older project structure. The scripts are kept here for reference and reproducibility purposes until I completely transition to the new structure. I want to replicate the analysis in the new project structure to make sure everything is working as expected. Nowadays I also have better solutions than `if(file.exists())` for managing the data and model fits, so I will update the script accordingly.
+:::

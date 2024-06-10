@@ -1,0 +1,21 @@
+---
+title: "Notes"
+format: html
+---
+
+# 10/06/2024
+
+Initialize the repository. I'm setting up my new project structure with Quarto for reporting, renv for package management, and GitHub for version control, and targets for workflow management.
+There are already some notebooks and analysis outputs in the previous project structure. For now I'm going to copy them over to the new structure and start working on the new simulations and analyses.
+Before publishing however, I should replicate the original notebooks and outputs in the new structure to make sure everything is working as expected.
+
+## Log:
+
+- add the original raw data after replacing the prolific ids with random strings (data-raw/anonymize_data.R)
+- add preprocessed data and brms output from previous analysis in output/exp1_updated.RData and output/exp2.RData
+   - TODO: these are big files, so cannot be shared on github. Should upload them to OSF and download them via script to the project folder when someone clones the repository
+
+## Tasks:
+
+- [ ] Ask Candice about notebook for generating her predictions
+- [ ] Introduce the idea behind the adversarial collaboration on the intro page

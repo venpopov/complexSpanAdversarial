@@ -1,0 +1,62 @@
+project:
+  type: website
+  execute-dir: project
+  
+
+execute: 
+  freeze: auto
+  engine: knitr
+  port: 8877
+  cache: true
+
+website:
+  title: "Complex Span: Adversarial Collaboration"
+  back-to-top-navigation: true
+  page-navigation: true
+  repo-url: ""
+  search: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            href: ""
+          - text: Report a Bug
+            href: ""
+  sidebar: 
+    collapse-level: 1
+    title: "Index"
+    contents: 
+      - index.qmd
+      - section: "Development notes"
+        contents:
+          - docs/notes.qmd
+          - auto: "docs/dev/*.qmd"
+      - section: Notebooks
+        contents:
+          - auto: "docs/notebooks/*.qmd"
+      - section: Archive
+        href: docs/archive/index.qmd
+        contents:
+          - auto: "docs/archive/*.qmd"
+
+knitr:
+  opts_chunk:
+    R.options:
+      width: 120
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true
+    code-tools: true
+    code-fold: true
+    code-overflow: wrap
+    page-layout: full
+    css: styles.css
+
+

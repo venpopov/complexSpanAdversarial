@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
+.vscode
+_site
+output/exp1_updated.RData
+output/exp2.RData
+*_cache
+*_files

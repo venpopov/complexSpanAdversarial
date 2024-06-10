@@ -1,0 +1,264 @@
+---
+title: "Joint analysis of E2a and E2b"
+author: "Ven Popov"
+date: "2023-08-30"
+date-modified: "2023-08-30"
+---
+
+{{< include ../_deprecated.qmd >}}
+
+## Load and clean data
+
+Joint analysis of Experiment 2a and 2b. Load libraries:
+
+```{r}
+#| warning: false
+#| message: false
+library(lme4)
+library(Rmisc)
+library(tidyverse)
+library(here)
+library(brms)
+
+dodge <- position_dodge(1)
+theme_set(theme_dark(base_size = 11))
+```
+
+Load and combine data that was preprocessed with David's script.
+
+```{r}
+# if the script has been run before, preload the data and model fits
+R_output_file <- here::here('output/exp2.RData')
+
+if (!file.exists(R_output_file)) {
+  exp2a <- read.csv(here::here('data/Expmt2a-PreReg/Processed/LongFormAnalysisData.csv'))
+  exp2b <- read.csv(here::here('data/Expmt2b-PreReg/Processed/LongFormAnalysisData.csv'))
+  exp2a$exp <- '2a'
+  exp2b$exp <- '2b'
+  exp2b$participant <- exp2b$participant
+  dat <- bind_rows(exp2a,exp2b)
+  
+  # Apply David's trimming script
+  procTrim <- dat %>% 
+    filter(ProportionTonesCorrect == 1) %>% 
+    mutate(rt = rt*1000) %>%  # Make RTs milliseconds
+    group_by(participant) %>% # grouping by participant so SD per participant calculated - similar to perParticipant = True in Trimr
+    filter(rt >= 200)%>%      # remove anything <200ms as this likely means they were anticipating response rather than reacting - same as Joseph & Morey 2021
+    filter(rt < 5000) %>%       
+    filter(abs(rt - mean(rt))/sd(rt) <= 3) 
+  
+  # This just gives a quick summary count of amount of data before and after trimming.
+  nrow(dat) #original number
+  nrow(procTrim) #number remaining
+  nrow(dat) - nrow(procTrim) #number removed  
+  
+  ##Rename variables to align with previous research
+  procTrim[procTrim == "LeadTone_RT1"] <- "Lead-in-4"
+  procTrim[procTrim == "LeadTone_RT2"] <- "Lead-in-3"
+  procTrim[procTrim == "LeadTone_RT3"] <- "Lead-in-2"
+  procTrim[procTrim == "LeadTone_RT4"] <- "Lead-in-1"
+  procTrim[procTrim == "MainTone_RT1"] <- "List-1"
+  procTrim[procTrim == "MainTone_RT2"] <- "List-2"
+  procTrim[procTrim == "MainTone_RT3"] <- "List-3"
+  procTrim[procTrim == "MainTone_RT4"] <- "List-4"
+  procTrim[procTrim == "MainTone_RT5"] <- "List-5"
+  procTrim[procTrim == "MainTone_RT6"] <- "List-6"
+  procTrim[procTrim == "MainTone_RT7"] <- "List-7"
+  procTrim[procTrim == "MainTone_RT8"] <- "List-8"
+  procTrim[procTrim == "MainTone_RT9"] <- "List-9"
+  
+  procTrim <- procTrim %>%  
+    mutate(procPeriod = case_when(grepl("Lead-in", procPos) ~ "Lead-in",
+                                  grepl("List", procPos) ~"Load")) %>% 
+    mutate(procPos = factor(procPos, levels = c("Lead-in-4", "Lead-in-3", "Lead-in-2", "Lead-in-1", "List-1", "List-2", "List-3", "List-4", "List-5", "List-6", "List-7", "List-8", "List-9"))) %>%
+    mutate(ListLength = as.factor(ListLength))%>%
+    mutate(serial_position_abs = as.numeric(gsub('List-','', procPos)),
+           serial_position_rel = serial_position_abs-recallamount) %>% 
+    mutate(recallamount = as.factor(recallamount)) %>% 
+    ungroup()
+} else {
+  load(R_output_file)
+  R_output_file <- here::here('output/exp2.RData')
+}
+
+
+```
+
+
+## Data Visualisation
+
+We can now plot our tidied and trimmed data. We will relabel some variables and then calculate the summary statistics before plotting.
+
+Reproduce the basic plot for both experiments (code from David's script)
+
+```{r PlotGraphs, fig.width=7, fig.height=7}
+
+# Means for plot, with within-participant SEMs
+graphRT <- summarySEwithin(ungroup(procTrim), measurevar = "rt", withinvars = c("ListLength","recallamount", "procPos", "procPeriod"), betweenvars="exp", idvar="participant")
+
+
+ggplot(graphRT, aes(procPos, rt, group=interaction(procPeriod, ListLength))) + 
+  geom_point(data = graphRT, mapping = aes(x = procPos, y = rt, color = ListLength), size = 2, alpha = 1/3, position = dodge) +
+  geom_line(data = graphRT, mapping = aes(x = procPos, y = rt, colour = ListLength, group = interaction(procPeriod, ListLength)), position = dodge) + 
+  geom_errorbar(aes(ymin=rt-se, ymax=rt+se, colour = ListLength), width=.15, position=position_dodge(.9))+
+  facet_grid(exp~recallamount, scales="free") + 
+  scale_colour_manual(values = viridisLite::viridis(8, direction = -1), name="List Length") + 
+  xlab("Serial Position") + 
+  ylab("Mean Response Time (ms)") +
+  # scale_y_continuous(breaks=seq(600, 1400, 50), limits = c(600, 1400))+
+  #ylim(250, 800) +
+  theme(axis.text.x = element_text(angle = 70, hjust=1)) 
+```
+
+Plot RT collapsed over list-length and as a function of serial position relative to N. Position 0 means the 2nd item in recall2 condition or the 4th item in the recall4 condition. Separately for both experiments
+
+
+```{r, fig.width=5, fig.height=7}
+# Means for plot, with within-participant SEMs
+graphRT <- procTrim %>% 
+  filter(procPeriod == "Load") %>% 
+  summarySEwithin(measurevar = "rt", withinvars = c("recallamount", "serial_position_rel"), betweenvars="exp", idvar="participant") %>% 
+  mutate(serial_position_rel = as.numeric(as.character(serial_position_rel)))
+
+ggplot(graphRT, aes(serial_position_rel, rt)) + 
+  geom_point(data = graphRT, mapping = aes(x = serial_position_rel, y = rt, color=as.factor(recallamount), group=as.factor(recallamount)), size = 2, alpha = 1/3) +
+  geom_line(data = graphRT, mapping = aes(x = serial_position_rel, y = rt, color=as.factor(recallamount), group=as.factor(recallamount))) + 
+  geom_errorbar(aes(ymin=rt-se, ymax=rt+se, color=as.factor(recallamount), group=as.factor(recallamount)), width=.15)+
+  scale_colour_manual(values = viridisLite::viridis(2, direction = -1), name="List Length") + 
+  xlab("Relative Serial Position") + 
+  ylab("Mean Response Time (ms)") +
+  # scale_y_continuous(breaks=seq(600, 1400, 50), limits = c(600, 1400))+
+  #ylim(250, 800) +
+  theme(axis.text.x = element_text(angle = 70, hjust=1))+
+  facet_grid(exp~., scales="free") +
+  geom_vline(xintercept = 0.5, color="red")
+
+```
+
+```{r, fig.width=9, fig.height=7}
+# Means for plot, with within-participant SEMs
+graphRT <- procTrim %>% 
+  filter(procPeriod == "Load") %>% 
+  summarySEwithin(measurevar = "rt", withinvars = c("recallamount", "serial_position_rel", "which_n_first"), betweenvars="exp", idvar="participant") %>% 
+  mutate(serial_position_rel = as.numeric(as.character(serial_position_rel)))
+
+ggplot(graphRT, aes(serial_position_rel, rt)) + 
+  geom_point(data = graphRT, mapping = aes(x = serial_position_rel, y = rt, color=as.factor(recallamount), group=as.factor(recallamount)), size = 2, alpha = 1/3) +
+  geom_line(data = graphRT, mapping = aes(x = serial_position_rel, y = rt, color=as.factor(recallamount), group=as.factor(recallamount))) + 
+  geom_errorbar(aes(ymin=rt-se, ymax=rt+se, color=as.factor(recallamount), group=as.factor(recallamount)), width=.15)+
+  scale_colour_manual(values = viridisLite::viridis(2, direction = -1), name="List Length") + 
+  xlab("Relative Serial Position") + 
+  ylab("Mean Response Time (ms)") +
+  # scale_y_continuous(breaks=seq(600, 1400, 50), limits = c(600, 1400))+
+  #ylim(250, 800) +
+  theme(axis.text.x = element_text(angle = 70, hjust=1))+
+  facet_grid(exp~which_n_first, scales="free") +
+  geom_vline(xintercept = 0.5, color="red")
+
+```
+
+
+Plot RT collapsed over list-length and experiment, as a function of serial position relative to N. Position 0 means the 2nd item in recall2 condition or the 4th item in the recall4 condition.
+
+```{r, fig.width=5, fig.height=4}
+# Means for plot, with within-participant SEMs
+graphRT <- procTrim %>% 
+  filter(procPeriod == "Load") %>% 
+  summarySEwithin(measurevar = "rt", withinvars = c("recallamount", "serial_position_rel"), idvar="participant") %>% 
+  mutate(serial_position_rel = as.numeric(as.character(serial_position_rel)))
+
+ggplot(graphRT, aes(serial_position_rel, rt)) + 
+  geom_point(data = graphRT, mapping = aes(x = serial_position_rel, y = rt, color=as.factor(recallamount), group=as.factor(recallamount)), size = 2, alpha = 1/3) +
+  geom_line(data = graphRT, mapping = aes(x = serial_position_rel, y = rt, color=as.factor(recallamount), group=as.factor(recallamount))) + 
+  geom_errorbar(aes(ymin=rt-se, ymax=rt+se, color=as.factor(recallamount), group=as.factor(recallamount)), width=.15)+
+  scale_colour_manual(values = viridisLite::viridis(2, direction = -1), name="List Length") + 
+  xlab("Relative Serial Position") + 
+  ylab("Mean Response Time (ms)") +
+  # scale_y_continuous(breaks=seq(600, 1400, 50), limits = c(600, 1400))+
+  #ylim(250, 800) +
+  theme(axis.text.x = element_text(angle = 70, hjust=1))+
+  geom_vline(xintercept = 0.5, color="red")
+
+
+```
+
+## Traditional lmer analysis for quick fit
+
+
+```{r}
+
+if (!file.exists(R_output_file)) {
+  mldat <- filter(procTrim, procPeriod == "Load", serial_position_rel >= 1) %>% 
+    mutate(ListLength = as.numeric(as.character(ListLength)))
+  
+  ml1 <- lmer(rt ~ exp + ListLength + recallamount + (1|participant), data=mldat)
+  ml2 <- lmer(rt ~ exp + ListLength + recallamount + serial_position_rel + (1|participant), data=mldat)
+  ml3 <- lmer(rt ~ exp + ListLength + recallamount + recallamount*serial_position_rel + (1|participant), data=mldat)
+}
+
+anova(ml1, ml2, ml3)
+```
+
+```{r}
+summary(ml2)
+```
+
+```{r}
+summary(ml3)
+```
+### BRMS ANALYSES  
+
+Fit the preregistered BRMS models. 
+
+Model 1 is the model that predicts no increase after position N+1
+Model 2 predicts an equal increase after position N+1 for both recall2 and recall4 condition
+Model 3 includes an interactions between relative position and recall2 vs recall4
+
+First, to use the default priors, we need to transform the DV and IVS. DV is log transformed because RTs are skewed, and then z transformed. Continuous predictiors are also z transformed, while categorical predictions are set to sum contrasts.
+
+```{r}
+if (!file.exists(R_output_file)) {
+  bmldat <- mldat %>% 
+    mutate(rt = scale(log(rt))[,1],
+           ListLength = scale(ListLength)[,1],
+           serial_position_rel = scale(serial_position_rel)[,1],
+           exp = as.factor(exp))
+  
+  contrasts(bmldat$recallamount) <- "contr.sum"
+  contrasts(bmldat$exp) <- "contr.sum"
+  
+  
+  bml1 <- brm(rt ~ exp + ListLength + recallamount + (1|participant), data=bmldat, 
+             save_all_pars = TRUE, iter = 40000, cores = 4, chains = 4)
+  bml2 <- brm(rt ~ exp + ListLength + recallamount + serial_position_rel + (1|participant), data=bmldat, 
+             save_all_pars = TRUE, iter = 40000, cores = 4, chains = 4)
+  bml3 <- brm(rt ~ exp + ListLength + recallamount + serial_position_rel*recallamount + (1|participant), data=bmldat, 
+             save_all_pars = TRUE, iter = 40000, cores = 4, chains = 4)
+}
+```
+
+View the estimates of the full model:
+
+```{r}
+summary(bml3)
+```
+
+Compute bayes factors via bridge sampling:
+
+```{r}
+set.seed(5236)
+
+if (!file.exists(R_output_file)) {
+  BF21 <- bayes_factor(bml2, bml1)
+  BF32 <- bayes_factor(bml3, bml2)
+}
+
+BF21
+BF32
+```
+
+
+```{r}
+# save.image(here::here('output/exp2.RData'))
+```
+
