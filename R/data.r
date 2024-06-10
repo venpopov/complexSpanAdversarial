@@ -44,7 +44,7 @@ replace_id <- function(file_path) {
 #' 
 #' @export
 anonymize_data_file <- function(file_path, orig_dir = "data-raw/original", target_dir = "data-raw") {
-  if (!dir.exists(orig_dir)) stop("The directory `", orig_dir, "` does not exist"
+  if (!dir.exists(orig_dir)) stop("The directory `", orig_dir, "` does not exist")
   res <- replace_id(file_path)
   new_path <- stringi::stri_replace(res$file_path, fixed = orig_dir, replacement = target_dir)
   fs::dir_create(fs::path_dir(new_path))
