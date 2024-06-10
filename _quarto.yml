@@ -13,6 +13,7 @@ website:
   title: "Complex Span: Adversarial Collaboration"
   back-to-top-navigation: true
   page-navigation: true
+  bread-crumbs: false
   repo-url: ""
   search: true
   navbar:

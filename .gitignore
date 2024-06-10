@@ -10,3 +10,5 @@ output/exp1_updated.RData
 output/exp2.RData
 *_cache
 *_files
+
+/.quarto/
