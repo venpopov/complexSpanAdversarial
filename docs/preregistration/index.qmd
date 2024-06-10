@@ -1,0 +1,449 @@
+---
+title: "Preregistration report"
+subtitle: An adversarial collaboration contrasting two explanations for the effect of working memory load on distractor processing during encoding and retention
+author:
+  - name: David Greeno
+    affiliation: School of Psychology, Cardiff University
+  - name: Candice Morey
+    affiliation: School of Psychology, Cardiff University
+  - name: Vencislav Popov
+    affiliation: Department of Psychology, University of Zurich
+date: "2022-04-26"
+date-modified: "2023-07-10"
+other-links:
+  - text: OSF version
+    icon: file-code
+    href: https://osf.io/d2zby/
+---
+
+## Introduction
+
+Working memory is a system for the concurrent maintenance and processing
+of information. The functioning of the working memory system is often
+studied using complex span tasks. These complex span tasks involve
+sequential presentation of interleaved memory items (e.g. consonants)
+and processing episodes (e.g. a tone discrimination task), followed by a
+recall test (@fig-task-orig). Results from complex span tasks have revealed
+bidirectional interference between maintenance and processing. Recall
+for the memoranda is lower when there are more processing episodes
+during the inter-item intervals (Barrouillet et al., 2004, 2011).
+Conversely, response times to the processing episodes are slower with
+increased memory load (Joseph & Morey, 2021; Morey, 2018). Such results
+have been interpreted as support for domain-general resource models like
+the time-based resource-sharing model (TBRS), in which maintenance and
+processing both depend on the same attentional resource (Barrouillet et
+al., 2011), or more recently with the reconfiguration account of Joseph
+and Morey (2021). In this adversarial collaboration we recognize that
+these results can also be accounted for by the gradual resource recovery
+model of Popov & Reder (2020), and we aim to identify and test divergent
+predictions of these models.
+
+The original investigation into cognitive load effects on maintenance
+and processing were motivated by the TBRS model (Barrouillet et al.,
+2004). TBRS makes the following assumptions -- if left unattended,
+memory traces suffer from time-based decay. In order to prevent memory
+traces from decaying, attention needs to be directed towards these
+traces repeatedly during stimulus presentation and retention intervals
+to refresh them. Since attention is limited, TBRS predicts that using
+attention to perform other operations in between stimulus presentation
+or during a retention interval will prevent the refreshing process from
+occurring, leading to worse subsequent recall for the stimuli due to the
+decayed memory traces. Conversely, the model predicts that increasing
+the memory load (e.g. with each additional item added to the memory
+list) leads to more traces in memory that need to be refreshed, thus
+leaving less attentional resource for performing the secondary task.
+This causes poorer discrimination performance with increasing serial
+positions regardless of whether the secondary task is performed in
+between encoding of the memoranda or during a retention interval. 
+
+![Complex span trial schematic in Joseph and Morey’s (2021) study. Lead-in trials also included four tone judgements (with the same timing) prior to the presentation of the first to-be-remembered letter. Lead-out trials included up to 8 tone judgements during the retention interval. Copyright: American Psychological Association (2021).](media/image1.png){#fig-task-orig}
+
+While many of the TBRS predictions have been confirmed, TBRS fails to
+account for some aspects of the data, namely that the impact of memory
+load on processing does not persist past the first judgment if the
+processing task is performed during the retention interval in a
+Brown-Peterson paradigm (Joseph & Morey, 2021; Klapp et al., 1983;
+Oberauer, 2002). Since TBRS posits that memoranda are continuously
+refreshed in order to prevent decay, it predicts that memory load should
+affect processing similarly regardless of whether processing occurs
+in-between encoding events, or during a retention interval, and there is
+furthermore no reason to presume that the cost of refreshing a memory
+list on concurrent judgment should disappear after the start of the
+retention period.
+
+Recently, Joseph and Morey (2021) proposed an alternative explanation
+for the effect of memory load on processing times that accounts both for
+the slowing of judgments during encoding of the list, and the subsequent
+speeding of judgments during retention. According to them, the observed
+slowing during encoding is due to the reconfiguration of
+to-be-remembered information in preparation for responding. Instead of
+presuming that short-term memory is supported by distinct resources
+meant only for temporary maintenance, Joseph and Morey adopted the
+notion that remembering may be explained by supposing that memory tasks
+co-opt mental resources associated with other functions (Jones and
+Macken, 2018). How one remembers information must depend on what
+internal processes are available for manipulating that information. For
+verbalizable information, the same processes available for producing
+speech are co-opted to accomplish the similar but more artificial task
+of preparing to recall a list of randomly-ordered letters, after
+MacDonald (2016). During encoding, participants continuously transform
+the incoming memoranda into a response-ready format, in this case speech
+output. With each new item, participants re-instantiate the intended
+output sequence, preparing a response starting at the beginning of the
+list and incorporating each new item. This transformation takes
+incrementally more time with each new item, leading to slower judgements
+in the concurrent processing task as the list accumulates. Once the list
+ends, however, since no additional items are added to the memory
+response set, no further reconfiguration is necessary: at that point,
+the response is prepared, and does not need to be acted upon until the
+opportunity to implement it occurs. As a result, there should be no
+impairment in processing judgments performed during the retention
+interval.
+
+To test the reconfiguration hypothesis, Joseph and Morey performed
+several complex span experiments in which participants had to remember
+sequences of consonants. Additionally, participants had to perform a
+tone-discrimination task prior to the presentation of the consonants
+("lead-in judgements"), in between presentations of the consonants
+("load judgements") or during the retention interval ("lead-out
+judgements"). @fig-task-orig illustrates the procedure for the "load
+judgements". The lead-in judgements were included to remove switching
+costs in RTs, which had been observed in prior research after the first
+memory item (Morey, 2018). The results of Experiment 3b are presented in
+@fig-jm-results and they clearly show three distinct patterns during lead-in,
+load and lead-out judgements. Response times to the tone discrimination
+task were slow during the initial lead-in judgement, reflecting
+switching costs, but they quickly reached a baseline level prior to the
+presentation of the first memory item. After the first memory item, RTs
+to the tone discrimination task increased substantially above baseline
+and continued to increase linearly with each additional memory item.
+Finally, during the retention interval, RTs to each subsequent tone
+decreased gradually until they asymptoted at nearly the lead-in baseline
+level.
+
+These results are inconsistent with the TBRS model which predicts that
+RTs during the lead-out judgements should not decrease but rather remain
+at a stable level because refreshing of the memoranda during the
+retention interval is required to prevent them from decaying. The
+reconfiguration hypothesis instead predicted this precise pattern of
+gradual slow-down during encoding, coupled with a speed up during
+retention, because there is no need for additional reconfiguration after
+the full list is presented. It should be noted that the reconfiguration
+hypothesis does not directly predict a gradual return to baseline --
+instead, once the configuration after the final item is complete, RTs to
+the lead-out judgements should return straight to the baseline instead
+of gradually decreasing, resulting in a step function. However, since
+this reconfiguration might take varying amounts of time for different
+trials and participants, the observed gradual decrease in lead-out
+response times could be an averaging artefact. Overall, the
+reconfiguration hypothesis provides a more plausible account of the
+observed data pattern than TBRS or multiple-component working memory
+models.
+
+![Results from Joseph and Morey’s (2021) Experiment 3b. Mean processing response times (in seconds, means normalized) for complex span trials with only lead-in processing judgments (left) or both lead-in and lead-out judgments (right), by list length and serial position. Copyright: American Psychological Association (2021).](media/image2.png){#fig-jm-results width="6.1454232283464565in"
+height="4.218413167104112in"}
+
+Joseph and Morey (2021) argued that these results cannot be easily
+accounted for by resource-based models like TBRS. However,
+resource-based models vary in the assumptions they make, and other
+resource models might be able to provide an alternative account that is
+also consistent with this data. In particular, consider the Source of
+Activation Confusion (SAC) model that implements a gradual
+resource-depletion-and-recovery assumption (Popov & Reder, 2020; Popov
+et al., 2019; Reder et al., 2007). In this model, the encoding of
+information into working and long-term memory depletes a limited
+resource that *recovers gradually over time.* In contrast to the TBRS
+model, the resource is not related to the maintenance of memoranda;
+instead, each time a new item is encoded into memory, its encoding
+depletes a fixed proportion of the existing resource pool, and the
+strength of the memory representation is proportional to the amount of
+resources depleted. Crucially, the depleted resources recover gradually
+over time. This resource-depletion-and-recovery assumption has received
+substantial support from word-frequency effects and primacy effects
+(Popov & Reder, 2020), sequential directed forgetting effects (Popov et
+al., 2019), free time effects (Mizrak & Oberauer, 2021), semantic
+similarity effects (Kowialiewski et al., 2021), and EEG findings (Lohnas
+et al., 2020).
+
+The resource-depletion-and-recovery assumption provides an easy
+explanation for the observed increase in tone judgement RTs during
+encoding with each serial position, as well as for the gradual speed up
+during retention. Each item during encoding depletes a fixed proportion
+of the remaining resource pool, which results in fewer resources
+dedicated to each subsequent memory or processing item. Since the amount
+of resources dedicated to an item determines the strength of its
+representation, which in turn determines recall and discrimination
+performance, the model predicts both a decrease in recall with serial
+position (a primacy effect for the memoranda) and a slow-down for tone
+judgements with serial position. Crucially, because the resource
+recovers gradually over time, the model, in contrast to TBRS, also
+predicts the gradual speed up of tone judgements during the retention
+interval. These predictions hold as long as we assume that distractor
+items deplete less resources than memory items, and that the recovery
+rate is faster than the depletion rate from distractors during the
+retention interval.
+
+To show that the resource-depletion-and-recovery hypothesis is
+consistent with the data, we simulated a simplified version of the SAC
+model (see the accompanying model code and Popov & Reder for a full
+explanation of the model). Response times were simulated via a drift
+diffusion process, with the drift rate for each processing item
+determined by the amount of available resources at the time of encoding
+it. At the current time we did not try to fit the data directly; rather,
+we selected parameters that reproduced the qualitative pattern observed
+in @fig-jm-results. The only ad hoc assumption added to the model is that the
+initial lead-in judgement reflects a switching cost, consistent with the
+interpretation of Joseph and Morey (2021). As can be seen from @fig-sac-jm-sim,
+the model captures well the several aspects of the behavioral data --
+gradual slow-down of the processing judgements with each serial position
+during encoding, followed by a speed up of processing judgements during
+the retention interval. In summary, both the reconfiguration account of
+Joseph and Morey (2021), and the resource-depletion-and-recovery model
+of Popov and Reder (2020) provide plausible accounts of Joseph and
+Morey's findings.
+
+The current adversarial collaboration involves proponents of the
+reconfiguration hypothesis (C. Morey) and the
+resource-depletion-and-recovery hypothesis (V. Popov), and its aim is to
+test diverging critical predictions of the two hypotheses.
+
+![Simulation of Joseph and Morey’s (2021) Experiment 3 results with the SAC model. Note the correspondence with the right panel of @fig-jm-results.](media/image3.png){#fig-sac-jm-sim width="5.572915573053368in"
+height="3.7152777777777777in"}
+
+One crucial place where the predictions of the two hypothesis diverge
+concerns performance in a running span version of the complex span task,
+in which participants do not know when the presentation will finish but
+know that they must always recall the most recent N items presented.
+Once the number of presented items exceeds N, this task requires
+continuous updating of the response set. With each additional item,
+participants must update their response set by removing the earliest
+item in it and adding the new item at the end. The reconfiguration
+hypothesis predicts that as long as the number of items presented are
+less than N, tone judgement RTs should slow down, just like in the fixed
+span task, because an increasing number of items must be transformed
+into a response-ready format. However, once the number of presented
+items exceeds N the response set no longer increases in number and the
+reconfiguration time should no longer increase with serial position.
+Thus, the reconfiguration hypothesis predicts that tone judgement RTs
+should gradually increase up to serial position N, possibly up to N+1 to
+reflect the cost of updating, after which they should remain at the same
+level until the retention interval, during which they would start
+decreasing, quickly approaching the speeds observed with a single memory
+item. In contrast, the resource-depletion-and-recovery hypothesis posits
+that each encoded item depletes a proportion of the resource pool, and
+this depletion process continues even after serial position N. Thus, the
+resource-depletion-and-recovery hypothesis predicts instead that the
+slow-down in tone judgement RTs should continue even after serial
+position N, just like in the fixed complex span task. The goal of
+Experiment 1 was to test these predictions.
+
+## Method
+
+### Participants
+
+In the first instance, we will recruit 60 adults with normal hearing,
+normal (or corrected-to-normal) vision, no diagnosed neurological
+disorders or learning disabilities between 18 and 35 years old. With
+samples of around 40, Joseph and Morey observed robust slowing of tone
+responses during list presentation. We decided to increase the initial
+sample size because we will use longer lists of up to 9 items. To keep
+the experiment duration under one hour, we needed to decrease the number
+of observations per list length. However, we shall apply Bayesian
+analysis techniques so that if our results are inconclusive with *N*=60,
+we may continue to increase the sample in batches of 20 until we reach a
+decisive outcome (Bayes Factor greater than 10 in favor of either
+hypothesis). We shall omit participants who 1) obtain less than 85%
+correct on the tone judgments, or 2) obtain less than 75% correct recall
+in the 2-item condition.
+
+### Procedure
+
+After indicating consent to take part, participants shall undertake a
+training session in which they learn to identify the low and high tones
+or whether a circle is above or below a line. Then participants will be
+guided through instructions of the primary recall task, namely that they
+must recall either the most recent 2 or 4 letters in the order they
+appeared, followed by the chance to practice. Participants will complete
+a practice trial at each list length with interleaved judgment task. For
+each trial, a fixation cross will first appear for 1 second. This will
+be followed by four consecutive lead-in processing trials. A tone
+(Experiment 1a), or image (Experiment 1b) will be presented for 750ms
+followed by a 250ms inter stimulus interval (blank screen). In a slight
+departure from the methodology used by Joseph and Morey (2021), upon
+presentation of the tone/image participants will immediately be able to
+indicate whether the tone/circle is high/above or low/below. The
+decision will be indicated by an up or down arrow keypress. If this
+response is made within 750ms a visual cue (up or down arrow) will
+inform the participant that their response has been registered. Assuming
+a response is given, the next trial will begin 1000ms after initial
+presentation of the processing task stimuli. This will keep timings
+between stimuli consistent. However, on any occasions where no response
+is given within 1000ms, the program will continue to await a response
+for a further 1500ms (blank screen) with a visual prompt to respond (up
+and down arrow in the center of the screen) appearing 2500ms after
+initial presentation of processing task stimuli. The experiment will
+then only proceed once a response has been given. This change in
+methodology has been incorporated in order to capture the actual time
+taken for participants to perform the processing task judgement and
+indicate a response (i.e. within 1000ms of stimuli presentation), rather
+than the time taken to indicate a decision in response to a later prompt
+(i.e. \>1000ms from stimuli presentation) as was previously done in
+Joseph and Morey.
+
+Following four lead-in judgments, participants will then complete a
+complex-span task (to-be-remembered digit followed by processing trial)
+up to a maximum list length of 7. Participants will be required to
+either recall the final two items or the final four items of the
+to-be-remembered list. This variable will be blocked and
+counterbalanced. Within a block, list lengths will be randomly mixed and
+then drawn without replacement. Once all list lengths have been used,
+they will be replaced with this process repeating until the end of the
+block. This ensures that there will be no more than two
+consecutively-presented lists of the same length and that participants
+do not begin to anticipate when each list will end. Within each recall
+block, each list length will be presented an equal number of times. For
+two-item recall, list-lengths will range from 2-9 items with five trials
+at each list length. For four-item recall, list-lengths will range from
+4-9 items with five trials at each list length. This gives a total of 70
+trials (40 two-item recall and 30 four-item recall).
+
+In the complex-span element, to-be-remembered consonants will be
+presented for 1 second with a 500-ms inter-stimulus interval. Each
+consonant will be followed by the processing task (same presentation
+parameters as lead-in trials) and this will continue up to the length of
+the to-be-remembered list. Following presentation of all consonants and
+processing tasks, all nine consonants will be re-presented on screen in
+alphabetical order with participants required to click on each letter in
+the same order they saw them presented.
+
+### Materials
+
+For each trial, to-be-remembered items will be randomly drawn without
+replacement from a set of nine consonants -- D, F, K, M, Q, S, V, X, Z.
+These consonants were selected by Joseph and Morey (2021) for their
+variability in place of articulation in the vocal tract and to avoid
+alphabetically consecutive consonants within to-be-remembered lists. The
+auditory processing task will consist of tones that will either be the
+note B (high tone; 308 Hz) or G (low tone; 245 Hz). A novel visual
+processing task will be used in Experiment 1b consisting of a grey
+circle placed either above (analogous to high tone) or below (analogous
+to low tone) a black line (see @fig-task).
+
+![Visual judgement task. Participants indicate via key press
+whether the grey circle is above (a) or below (b) the black line.](media/image4.png){#fig-task width="4.34375in"
+height="1.7194006999125109in"}
+
+### Design and predictions
+
+Both variables, recall condition and list length, are manipulated
+within-participants. We will analyze both recall and judgment responses,
+initially to check our eligibility criterion. We expect to observe very
+high average recall in both the Recall 2 and Recall 4 conditions, so we
+do not anticipate that recall scores will differentiate between
+theoretical explanations. Our primary analyses focus on the judgment
+response times, particularly whether (or when) response times reach an
+asymptote by serial position, and whether tone judgment response times
+differ depending on the number of items to be recalled or the overall
+list length. Only response times from correct judgments will be included
+in analyses. Predictions for each perspective are plotted below.
+
+We will use Bayesian multi-level regression as implemented in the *brms*
+R package (as well as comparable multi-level regression implemented in
+the *BayesFactor* R package) to analyze response times after position N
++1. The two regression models will be:
+
+$$
+\ RT\ \sim\ listLength + recallLength\  + \left( 1 \middle| ID \right)
+$$ {#eq-reconfig}
+
+$$
+RT\ \sim\ listLength + recallLength + serialPosition + (1|ID)
+$$ {#eq-sac}
+The first model implements the prediction of the reconfiguration
+hypothesis -- RTs will not increase after serial position N+1. In
+contrast, the second model implements the prediction of the
+resource-depletion-and-recovery hypothesis -- RTs will increase even
+after serial position N+1. We will compare the two models using Bayes
+Factors and will consider Bayes Factors greater than 10 in either
+direction as conclusive evidence. If the Bayes Factor is between 1 and
+10, we will increase the sample size, as described before, until we
+reach conclusive evidence.
+
+![Predicted interleaved judgment response times as a function of
+serial position (x axis), overall list length (differentiated by color),
+and recall condition (per panel) according to the reconfiguration
+account. The reconfiguration account predicts an asymptote in judgment
+response times at the value reached around the second to third item in
+the Recall Last 2 condition and around the fourth to fifth item in the
+Recall Last 4 condition.](media/image5.png){#fig-reconfig-pred width="7.0in"
+height="4.5in"}
+
+![Predicted interleaved judgement response times as a function
+of serial position (x axis), overall list length, and recall condition
+according to the resource-replenishment account. The
+resource-replenishment account predicts that judgement response times
+will increase gradually with each list position, regardless of how many
+items need to be recalled. Based on the work by Bunting, Cowan and
+Saults (2006), the model assumes that people put less effort into the
+"Recall Last 2" relative to the "Recall Last 4" condition. In the model
+this is achieved by lowering the learning rate (in this case, from 0.3
+to 0.25), which also reduces the amount of resources depleted by each
+memory item. As a result, more resources are available for processing
+the distractors in the "Recall Last 2" condition, causing faster overall
+RTs, and a smaller slope over serial position. List Length predictions
+overlap, thus only one line is shown for the maximum list length
+condition. Predictions were simulated from the Popov & Reder (2020)
+model (please see the accompanying code for the simulation).](media/image6.png){#fig-sac-pred width="5.979166666666667in"
+height="3.5875in"}
+
+
+# References
+
+Barrouillet, P., Bernardin, S., & Camos, V. (2004). Time constraints and
+resource sharing in adults' working memory spans. *Journal of
+Experimental Psychology: General*, *133*(1), 83.
+
+Barrouillet, P., Portrat, S., & Camos, V. (2011). On the law relating
+processing to storage in working memory. *Psychological Review*,
+*118*(2), 175.
+
+Joseph, T. N., & Morey, C. C. (2021). Impact of memory load on
+processing diminishes rapidly during retention in a complex span
+paradigm. *Journal of Experimental Psychology: Learning, Memory, and
+Cognition*. https://doi.org/10.1037/xlm0001061
+
+Klapp, S. T., Marshburn, E. A., & Lester, P. T. (1983). Short-term
+memory does not involve the\" working memory\" of information
+processing: The demise of a common assumption. *Journal of Experimental
+Psychology: General*, *112*(2), 240.
+
+Kowialiewski, B., Lemaire, B., & Portrat, S. (2021). How does semantic
+knowledge impact working memory maintenance? Computational and
+behavioral investigations. *Journal of Memory and Language*, *117*,
+104208.
+
+Lohnas, L. J., Davachi, L., & Kahana, M. J. (2020). Neural fatigue
+influences memory encoding in the human hippocampus. *Neuropsychologia*,
+*143*, 107471. https://doi.org/10.1016/j.neuropsychologia.2020.107471
+
+Mizrak, E., & Oberauer, K. (2021). What is time good for in working
+memory? In *Psychological Science*.
+https://doi.org/10.31234/osf.io/ahqwj
+
+Morey, C. C. (2018). The case against specialized visual-spatial
+short-term memory. *Psychological Bulletin*, *144*(8), 849--883.
+https://doi.org/10.1037/bul0000155
+
+Oberauer, K. (2002). Access to information in working memory: Exploring
+the focus of attention. *In*, 411--421.
+
+Popov, V., Marevic, I., Rummel, J., & Reder, L. M. (2019). Forgetting Is
+a Feature, Not a Bug: Intentionally Forgetting Some Things Helps Us
+Remember Others by Freeing Up Working Memory Resources. *Psychological
+Science*, *30*(9), 1303--1317. https://doi.org/10.1177/0956797619859531
+
+Popov, V., & Reder, L. M. (2020). Frequency effects on memory: A
+resource-limited theory. *Psychological Review*, *127*(1), 1--46.
+https://doi.org/10.1037/rev0000161
+
+

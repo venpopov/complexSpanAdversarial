@@ -20,6 +20,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: docs/preregistration/index.qmd
+        text: Preregistration
     tools:
       - icon: github
         menu:
