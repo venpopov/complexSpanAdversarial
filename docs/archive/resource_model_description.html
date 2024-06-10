@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ven Popov">
+<meta name="dcterms.date" content="2023-08-30">
+
+<title>Complex Span: Adversarial Collaboration – Initial model predictions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../docs/archive/JointAnalyses-2ab-Ven.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Complex Span: Adversarial Collaboration</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <div class="dropdown">
+      <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="">
+            Source Code
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="">
+            Report a Bug
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/archive/index.html">Archive</a></li><li class="breadcrumb-item"><a href="../../docs/archive/resource_model_description.html">Initial model predictions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Development notes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/notes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Notes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Notebooks</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../docs/archive/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Archive</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/archive/JointAnalyses-1ab-Ven.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Joint analysis of E1a and E1b</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/archive/JointAnalyses-2ab-Ven.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Joint analysis of E2a and E2b</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/archive/resource_model_description.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Initial model predictions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#explanation-of-the-model-and-model-code" id="toc-explanation-of-the-model-and-model-code" class="nav-link active" data-scroll-target="#explanation-of-the-model-and-model-code">Explanation of the model and model code</a></li>
+  <li><a href="#simulations-of-existing-data" id="toc-simulations-of-existing-data" class="nav-link" data-scroll-target="#simulations-of-existing-data">Simulations of existing data</a></li>
+  <li><a href="#predictions-for-the-running-span-experiment" id="toc-predictions-for-the-running-span-experiment" class="nav-link" data-scroll-target="#predictions-for-the-running-span-experiment">Predictions for the running span experiment</a></li>
+  <li><a href="#predictions-about-isi-experiment" id="toc-predictions-about-isi-experiment" class="nav-link" data-scroll-target="#predictions-about-isi-experiment">Predictions about ISI experiment</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../docs/archive/index.html">Archive</a></li><li class="breadcrumb-item"><a href="../../docs/archive/resource_model_description.html">Initial model predictions</a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Initial model predictions</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ven Popov </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 30, 2023</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">August 30, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These are legacy analyses scripts from my older project structure. The scripts are kept here for reference and reproducibility purposes until I completely transition to the new structure. I want to replicate the analysis in the new project structure to make sure everything is working as expected. Nowadays I also have better solutions than <code>if(file.exists())</code> for managing the data and model fits, so I will update the script accordingly.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rtdists)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="explanation-of-the-model-and-model-code" class="level2">
+<h2 class="anchored" data-anchor-id="explanation-of-the-model-and-model-code">Explanation of the model and model code</h2>
+<p>This is a simplified version of the resource model. All results below are simulated from the following functions. The model works as follows. Any WM trial begins with maximum resources R=1. The encoding of items and distractors each deplete a certain proportion of the currently available resources. Encoding of items depletes <code>pMem</code> proportion of resources, while the encoding of distractors depletes <code>pTone</code> proportion of resources, where <code>pTone</code> is assumed to be less than <code>pMem</code>. Resources recover as a linear function of time with rate of <code>rate</code> resources/second. The strength of the encoded item or tone is equal to <code>pMem * R_available</code> and of tones to <code>pTone * R_available</code>. For example, we start with R=1, and then the first item depletes 50% of available resources (pMem = 0.5), so it’s strength is <code>0.5*1=0.5</code>. Then a tone is presented is 1.5 sec after the memory item onset. In that time resources have recovered to <code>0.5 + 1.5*0.1= 0.65</code>. The tone depletes <code>0.1*0.65=0.065</code> resources, and leaves <code>0.585</code> available, etc. Because each memory item depletes more resources than what can be recovered during the ISI, each “load” tone is encoded less and less well. In contrast, during the retention interval no memory items are encoding, and the encoding rate of tone items is less than the recovery rate, so each subsequent tone is encoded more strongly. Finally, tone judgement RTs are modeled as a drift diffusion process with the drift rate being proportional to the encoding strength of the tone item. The only adjustment to RTs that doesn’t come from the model is a constant added to the initial lead-in judgement to reflect switching costs. Everything else is simulated from the model.</p>
+<p>The function below is given as an input the three learning and recovery parameters, then the details of the study procedure (number of leadin items, setsize, number of lead out items, timing parameters for the presentation) and a couple of scaling parameters for the diffusion model. Then it outputs memory strength values for each memory item and each probe item, as well as RT predictions for the tone judgements.</p>
+<p>I did not fit the model to the data, but rather chose a set of parameters that give a good approximation (for simplicity; for the eventual paper I should fit the model properly).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">pMem=</span><span class="fl">0.5</span>, <span class="at">pTone=</span><span class="fl">0.1</span>, <span class="at">rate=</span><span class="fl">0.05</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">leadin_n =</span> <span class="dv">4</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">setsize =</span> <span class="dv">7</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">leadout_n =</span> <span class="dv">8</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mem_duration =</span> <span class="dv">1</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mem_tone_ISI =</span> <span class="fl">0.5</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tone_duration =</span> <span class="fl">0.75+0.25</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">decision_time =</span> <span class="fl">0.8</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tone_mem_ISI =</span> <span class="fl">0.5</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">a=</span><span class="dv">2</span>, <span class="at">vc=</span><span class="dv">40</span>) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get_resources &lt;- function(R_prev, p, rate, ti) {</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   R = 1 - (1-(1-p)*R_prev)*exp(-rate*ti) </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   return(R)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># }</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># function calculating amount of remaining resources after depletion and recovery</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  get_resources_lin <span class="ot">&lt;-</span> <span class="cf">function</span>(R_prev, p, rate, ti) {</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    R <span class="ot">=</span> <span class="fu">sapply</span>(ti, <span class="cf">function</span>(x) <span class="fu">min</span>(<span class="dv">1</span>, (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">*</span>R_prev <span class="sc">+</span> rate<span class="sc">*</span>x))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(R)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># function constructs a sequence of expeirmental events based on experimental parameters</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  gen_exp_info <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    trial_seq <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'tone'</span>, <span class="at">times=</span>leadin_n),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">'mem'</span>,<span class="st">'tone'</span>), <span class="at">times=</span>setsize), </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">rep</span>(<span class="st">'tone'</span>, <span class="at">times=</span>leadout_n))</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    ps <span class="ot">=</span> <span class="fu">ifelse</span>(trial_seq <span class="sc">==</span> <span class="st">"mem"</span>, pMem, pTone)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    trial_times <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(tone_duration<span class="sc">+</span>decision_time<span class="sc">+</span>tone_mem_ISI, <span class="at">times=</span>leadin_n),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(<span class="fu">c</span>(mem_duration<span class="sc">+</span>mem_tone_ISI, tone_duration<span class="sc">+</span>decision_time<span class="sc">+</span>tone_mem_ISI), <span class="at">times=</span>setsize), </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(tone_duration<span class="sc">+</span>decision_time<span class="sc">+</span>tone_mem_ISI, <span class="at">times=</span>leadout_n))</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">trial_seq=</span>trial_seq, <span class="at">ps=</span>ps, <span class="at">trial_times=</span>trial_times))</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># function generates encoding strength values based on learning parameters and amount of available resources</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  gen_strength <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    strengths <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    Rs <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    R <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(exp_info<span class="sc">$</span>trial_seq)) {</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>      p_prev <span class="ot">=</span> <span class="fu">ifelse</span>(i<span class="sc">==</span><span class="dv">1</span>, <span class="dv">0</span>, exp_info<span class="sc">$</span>ps[i<span class="dv">-1</span>])</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>      R <span class="ot">=</span> <span class="fu">get_resources_lin</span>(R, p_prev, rate, exp_info<span class="sc">$</span>trial_times[i])</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>      Rs <span class="ot">=</span> <span class="fu">c</span>(Rs, R)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>      strengths <span class="ot">&lt;-</span> <span class="fu">c</span>(strengths, R<span class="sc">*</span>exp_info<span class="sc">$</span>ps[i])</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>      i<span class="ot">=</span>i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">strengths=</span>strengths, <span class="at">Rs=</span>Rs))</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  extract_tone_strengths <span class="ot">&lt;-</span> <span class="cf">function</span>(strengths) {</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    strengths[exp_info<span class="sc">$</span>trial_seq<span class="sc">==</span><span class="st">'tone'</span>]</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># generate RTs based on a drift diffusion process from the encoding strnegth as a drift rate.</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  gen_tone_rts <span class="ot">&lt;-</span> <span class="cf">function</span>(strengths) {</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(strengths, <span class="cf">function</span>(x) <span class="fu">qdiffusion</span>(<span class="fl">0.5</span>, <span class="at">a=</span>a, <span class="at">v=</span>vc<span class="sc">*</span>x, <span class="at">t0=</span><span class="fl">0.2</span>))</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  <span class="do">## run simulation with default parameter</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  exp_info <span class="ot">=</span> <span class="fu">gen_exp_info</span>()</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  sim <span class="ot">=</span> <span class="fu">gen_strength</span>()</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  all_s <span class="ot">=</span> sim<span class="sc">$</span>strengths</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  tone_s <span class="ot">=</span> <span class="fu">extract_tone_strengths</span>(all_s)</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  rts <span class="ot">=</span> <span class="fu">gen_tone_rts</span>(tone_s)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  pars <span class="ot">=</span> <span class="fu">list</span>(<span class="at">pMem=</span>pMem, <span class="at">pTone=</span>pTone, <span class="at">rate=</span>rate,</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>              <span class="at">leadin_n=</span>leadin_n, <span class="at">setsize=</span>setsize, <span class="at">leadout_n=</span>leadout_n,</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>              <span class="at">mem_duration=</span>mem_duration, <span class="at">mem_tone_ISI =</span> mem_tone_ISI,</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>              <span class="at">tone_duration=</span>tone_duration, <span class="at">decision_time=</span>decision_time,</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>              <span class="at">tone_mem_ISI =</span> tone_mem_ISI)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">exp_info=</span>exp_info, <span class="at">all_s=</span>all_s, <span class="at">tone_s=</span>tone_s, <span class="at">rts=</span>rts, <span class="at">Rs=</span>sim<span class="sc">$</span>Rs, <span class="at">pars=</span>pars))</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="simulations-of-existing-data" class="level2">
+<h2 class="anchored" data-anchor-id="simulations-of-existing-data">Simulations of existing data</h2>
+<p>Here’s the overall initial simulation to show that the model captures the pattern presented in Joseph and Morey (2021). Memory items deplete 30% of resources, tones deplete 10% of resources, and the resource recovers at a rate of 0.05 per second. The model simulation captures all major aspects of the data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">pTone=</span><span class="fl">0.1</span>, <span class="at">rate=</span><span class="fl">0.05</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>pos <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> dat<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(pos, rts, <span class="at">group=</span>type)) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Serial position"</span>, <span class="at">labels=</span>dat<span class="sc">$</span>type_pos, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat)) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Mean Response Time"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">'figures/sac_jm2021_simulation.png'</span>), <span class="at">width=</span><span class="dv">6</span>, <span class="at">height=</span><span class="dv">4</span>, <span class="at">units=</span><span class="st">'in'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The model also predicts that the lead-out judgements should be overall faster with smaller setsizes, as shown in Figure 6 of Joseph and Morey (2021)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (setsize <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>)) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">rate=</span><span class="fl">0.06</span>, <span class="at">a=</span><span class="dv">4</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">4</span>,  <span class="at">setsize=</span>setsize)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">8</span><span class="sc">:</span>(<span class="dv">7</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">setsize =</span> simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(pos, rts, <span class="at">group=</span><span class="fu">interaction</span>(type, setsize), <span class="at">color=</span><span class="fu">as.factor</span>(setsize))) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="fl">0.6</span>,<span class="fl">1.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="predictions-for-the-running-span-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="predictions-for-the-running-span-experiment">Predictions for the running span experiment</h2>
+<p>In the model the running span task is implemented during encoding exactly the same as the simple span task - each item depletes resources regardless of whether the items is in position less or larger than the recall span. The model predicts that RTs gradualy get less and less of decrement with each serial position, but they never completely asymptote (at least not with up to 10 items). On the plot below there is only one line during the load judgements because the smaller setsizes lines overlap completely.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (setsize <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span>setsize)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">setsize =</span> simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, setsize), <span class="at">color=</span><span class="fu">as.factor</span>(setsize))) <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (setsize <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>)) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span>setsize)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'List-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'List'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">setsize =</span> simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">!=</span> <span class="st">"Lead-out"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts<span class="sc">*</span><span class="dv">1000</span>, <span class="at">group=</span><span class="fu">interaction</span>(type, setsize), <span class="at">color=</span><span class="fu">as.factor</span>(setsize))) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) + +</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Mean Response Time"</span>) <span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="st">'List Length'</span>) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">'Serial Position'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">'figures/resource_predictions.png'</span>), <span class="at">width=</span><span class="dv">5</span>, <span class="at">height=</span><span class="dv">3</span>, <span class="at">units=</span><span class="st">'in'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>One potential complication we discussed is that Klaus has found that he can model the running span task with a resource recovery model if he assumes that people encode items in the running span task more passively, which results in a lower depletion rate (i.e., smaller pMem parameter). I next ran the model with a range of pMem values, to make sure that the same predictions are carried out regardless if people deplete less resources in the running span task. The next simulation varies pMem from 0.15 to 0.35. We can see that this shifts the RTs up and down but doesn’t change the shape of the function much. With lower learning rate, there is less of a decrement on tone RTs, but tone RTs still slow down with each item added to memory. The effect will only disappear if the learning rate gets down to 0.08</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (pmem <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>,<span class="fl">0.25</span>, <span class="fl">0.3</span>, <span class="fl">0.35</span>)) {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span>pmem, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span><span class="dv">10</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pmem =</span> pmem)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, pmem), <span class="at">color=</span><span class="fu">as.factor</span>(pmem))) <span class="sc">+</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="predictions-about-isi-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="predictions-about-isi-experiment">Predictions about ISI experiment</h2>
+<p>The model predicts that if we increase either the item-to-tone ISI, or the tone-to-item ISI, we should get less slow down with each item, because resources would have recovered more:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (memtoneISI <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.3</span>,<span class="fl">0.5</span>,<span class="fl">0.7</span>,<span class="fl">0.9</span>,<span class="fl">1.5</span>,<span class="dv">2</span>)) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span><span class="dv">10</span>, <span class="at">mem_tone_ISI =</span> memtoneISI)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mem_tone_ISI =</span> memtoneISI)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, mem_tone_ISI), <span class="at">color=</span><span class="fu">as.factor</span>(mem_tone_ISI))) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (tonememISI <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.3</span>,<span class="fl">0.5</span>,<span class="fl">0.7</span>,<span class="fl">0.9</span>,<span class="fl">1.5</span>,<span class="dv">2</span>)) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span><span class="dv">10</span>, <span class="at">tone_mem_ISI =</span> tonememISI)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tone_mem_ISI =</span> tonememISI)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, tone_mem_ISI), <span class="at">color=</span><span class="fu">as.factor</span>(tone_mem_ISI))) <span class="sc">+</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="resource_model_description_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The only difference is that if we increase the item-to-tone ISI, we also get an effect on the first tone, but we increase the tone-to-item ISI we only get effects on the subsequent tones. In contrast, I think that the reconfiguration hypothesis would predict that only increasing the mem-to-tone ISI should decrease the slow-down rate of tone_judgements with each serial positions, but that there should be no effect of the tone_to_mem ISI.</p>
+
+
+<!-- -->
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../../docs/archive/JointAnalyses-2ab-Ven.html" class="pagination-link" aria-label="Joint analysis of E2a and E2b">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Joint analysis of E2a and E2b</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Initial model predictions"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Ven Popov"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2023-08-30"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="an">date-modified:</span><span class="co"> "2023-08-30"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../_deprecated.qmd &gt;}}</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning=FALSE, message=FALSE}</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">library(rtdists)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">library(here)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Explanation of the model and model code</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>This is a simplified version of the resource model. All results below are simulated from the following functions. The model works as follows. Any WM trial begins with maximum resources R=1. The encoding of items and distractors each deplete a certain proportion of the currently available resources. Encoding of items depletes <span class="in">`pMem`</span> proportion of resources, while the encoding of distractors depletes <span class="in">`pTone`</span> proportion of resources, where <span class="in">`pTone`</span> is assumed to be less than <span class="in">`pMem`</span>. Resources recover as a linear function of time with rate of <span class="in">`rate`</span> resources/second. The strength of the encoded item or tone is equal to <span class="in">`pMem * R_available`</span> and of tones to <span class="in">`pTone * R_available`</span>. For example, we start with R=1, and then the first item depletes 50% of available resources (pMem = 0.5), so it's strength is <span class="in">`0.5*1=0.5`</span>. Then a tone is presented is 1.5 sec after the memory item onset. In that time resources have recovered to <span class="in">`0.5 + 1.5*0.1= 0.65`</span>. The tone depletes <span class="in">`0.1*0.65=0.065`</span> resources, and leaves <span class="in">`0.585`</span> available, etc. Because each memory item depletes more resources than what can be recovered during the ISI, each "load" tone is encoded less and less well. In contrast, during the retention interval no memory items are encoding, and the encoding rate of tone items is less than the recovery rate, so each subsequent tone is encoded more strongly. Finally, tone judgement RTs are modeled as a drift diffusion process with the drift rate being proportional to the encoding strength of the tone item. The only adjustment to RTs that doesn't come from the model is a constant added to the initial lead-in judgement to reflect switching costs. Everything else is simulated from the model.</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>The function below is given as an input the three learning and recovery parameters, then the details of the study procedure (number of leadin items, setsize, number of lead out items, timing parameters for the presentation) and a couple of scaling parameters for the diffusion model. Then it outputs memory strength values for each memory item and each probe item, as well as RT predictions for the tone judgements.</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>I did not fit the model to the data, but rather chose a set of parameters that give a good approximation (for simplicity; for the eventual paper I should fit the model properly).</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">pMem=</span><span class="fl">0.5</span>, <span class="at">pTone=</span><span class="fl">0.1</span>, <span class="at">rate=</span><span class="fl">0.05</span>, </span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">leadin_n =</span> <span class="dv">4</span>, </span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">setsize =</span> <span class="dv">7</span>,</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">leadout_n =</span> <span class="dv">8</span>,</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mem_duration =</span> <span class="dv">1</span>,</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mem_tone_ISI =</span> <span class="fl">0.5</span>,</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tone_duration =</span> <span class="fl">0.75+0.25</span>,</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">decision_time =</span> <span class="fl">0.8</span>,</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tone_mem_ISI =</span> <span class="fl">0.5</span>,</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">a=</span><span class="dv">2</span>, <span class="at">vc=</span><span class="dv">40</span>) {</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get_resources &lt;- function(R_prev, p, rate, ti) {</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   R = 1 - (1-(1-p)*R_prev)*exp(-rate*ti) </span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   return(R)</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># }</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># function calculating amount of remaining resources after depletion and recovery</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  get_resources_lin <span class="ot">&lt;-</span> <span class="cf">function</span>(R_prev, p, rate, ti) {</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>    R <span class="ot">=</span> <span class="fu">sapply</span>(ti, <span class="cf">function</span>(x) <span class="fu">min</span>(<span class="dv">1</span>, (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">*</span>R_prev <span class="sc">+</span> rate<span class="sc">*</span>x))</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(R)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>  <span class="co"># function constructs a sequence of expeirmental events based on experimental parameters</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>  gen_exp_info <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    trial_seq <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'tone'</span>, <span class="at">times=</span>leadin_n),</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">'mem'</span>,<span class="st">'tone'</span>), <span class="at">times=</span>setsize), </span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">rep</span>(<span class="st">'tone'</span>, <span class="at">times=</span>leadout_n))</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>    ps <span class="ot">=</span> <span class="fu">ifelse</span>(trial_seq <span class="sc">==</span> <span class="st">"mem"</span>, pMem, pTone)</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>    trial_times <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(tone_duration<span class="sc">+</span>decision_time<span class="sc">+</span>tone_mem_ISI, <span class="at">times=</span>leadin_n),</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(<span class="fu">c</span>(mem_duration<span class="sc">+</span>mem_tone_ISI, tone_duration<span class="sc">+</span>decision_time<span class="sc">+</span>tone_mem_ISI), <span class="at">times=</span>setsize), </span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(tone_duration<span class="sc">+</span>decision_time<span class="sc">+</span>tone_mem_ISI, <span class="at">times=</span>leadout_n))</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">trial_seq=</span>trial_seq, <span class="at">ps=</span>ps, <span class="at">trial_times=</span>trial_times))</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># function generates encoding strength values based on learning parameters and amount of available resources</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>  gen_strength <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    strengths <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>    Rs <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>    R <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(exp_info<span class="sc">$</span>trial_seq)) {</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>      p_prev <span class="ot">=</span> <span class="fu">ifelse</span>(i<span class="sc">==</span><span class="dv">1</span>, <span class="dv">0</span>, exp_info<span class="sc">$</span>ps[i<span class="dv">-1</span>])</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>      R <span class="ot">=</span> <span class="fu">get_resources_lin</span>(R, p_prev, rate, exp_info<span class="sc">$</span>trial_times[i])</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>      Rs <span class="ot">=</span> <span class="fu">c</span>(Rs, R)</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>      strengths <span class="ot">&lt;-</span> <span class="fu">c</span>(strengths, R<span class="sc">*</span>exp_info<span class="sc">$</span>ps[i])</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>      i<span class="ot">=</span>i<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">strengths=</span>strengths, <span class="at">Rs=</span>Rs))</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>  extract_tone_strengths <span class="ot">&lt;-</span> <span class="cf">function</span>(strengths) {</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>    strengths[exp_info<span class="sc">$</span>trial_seq<span class="sc">==</span><span class="st">'tone'</span>]</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>  <span class="co"># generate RTs based on a drift diffusion process from the encoding strnegth as a drift rate.</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  gen_tone_rts <span class="ot">&lt;-</span> <span class="cf">function</span>(strengths) {</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(strengths, <span class="cf">function</span>(x) <span class="fu">qdiffusion</span>(<span class="fl">0.5</span>, <span class="at">a=</span>a, <span class="at">v=</span>vc<span class="sc">*</span>x, <span class="at">t0=</span><span class="fl">0.2</span>))</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>  <span class="do">## run simulation with default parameter</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>  exp_info <span class="ot">=</span> <span class="fu">gen_exp_info</span>()</span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>  sim <span class="ot">=</span> <span class="fu">gen_strength</span>()</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>  all_s <span class="ot">=</span> sim<span class="sc">$</span>strengths</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>  tone_s <span class="ot">=</span> <span class="fu">extract_tone_strengths</span>(all_s)</span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>  rts <span class="ot">=</span> <span class="fu">gen_tone_rts</span>(tone_s)</span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>  pars <span class="ot">=</span> <span class="fu">list</span>(<span class="at">pMem=</span>pMem, <span class="at">pTone=</span>pTone, <span class="at">rate=</span>rate,</span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>              <span class="at">leadin_n=</span>leadin_n, <span class="at">setsize=</span>setsize, <span class="at">leadout_n=</span>leadout_n,</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>              <span class="at">mem_duration=</span>mem_duration, <span class="at">mem_tone_ISI =</span> mem_tone_ISI,</span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>              <span class="at">tone_duration=</span>tone_duration, <span class="at">decision_time=</span>decision_time,</span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>              <span class="at">tone_mem_ISI =</span> tone_mem_ISI)</span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">exp_info=</span>exp_info, <span class="at">all_s=</span>all_s, <span class="at">tone_s=</span>tone_s, <span class="at">rts=</span>rts, <span class="at">Rs=</span>sim<span class="sc">$</span>Rs, <span class="at">pars=</span>pars))</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulations of existing data</span></span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>Here's the overall initial simulation to show that the model captures the pattern presented in Joseph and Morey (2021). Memory items deplete 30% of resources, tones deplete 10% of resources, and the resource recovers at a rate of 0.05 per second. The model simulation captures all major aspects of the data.</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">pTone=</span><span class="fl">0.1</span>, <span class="at">rate=</span><span class="fl">0.05</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>)</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s)</span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>pos <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat)</span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> dat<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(pos, rts, <span class="at">group=</span>type)) <span class="sc">+</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Serial position"</span>, <span class="at">labels=</span>dat<span class="sc">$</span>type_pos, <span class="at">breaks=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat)) <span class="sc">+</span></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Mean Response Time"</span>)</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">'figures/sac_jm2021_simulation.png'</span>), <span class="at">width=</span><span class="dv">6</span>, <span class="at">height=</span><span class="dv">4</span>, <span class="at">units=</span><span class="st">'in'</span>)</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>The model also predicts that the lead-out judgements should be overall faster with smaller setsizes, as shown in Figure 6 of Joseph and Morey (2021)</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (setsize <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>)) {</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">rate=</span><span class="fl">0.06</span>, <span class="at">a=</span><span class="dv">4</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">4</span>,  <span class="at">setsize=</span>setsize)</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">8</span><span class="sc">:</span>(<span class="dv">7</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>                  <span class="at">setsize =</span> simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize)</span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(pos, rts, <span class="at">group=</span><span class="fu">interaction</span>(type, setsize), <span class="at">color=</span><span class="fu">as.factor</span>(setsize))) <span class="sc">+</span></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim=</span><span class="fu">c</span>(<span class="fl">0.6</span>,<span class="fl">1.3</span>))</span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Predictions for the running span experiment</span></span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>In the model the running span task is implemented during encoding exactly the same as the simple span task - each item depletes resources regardless of whether the items is in position less or larger than the recall span. The model predicts that RTs gradualy get less and less of decrement with each serial position, but they never completely asymptote (at least not with up to 10 items). On the plot below there is only one line during the load judgements because the smaller setsizes lines overlap completely.</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (setsize <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)) {</span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span>setsize)</span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>                  <span class="at">setsize =</span> simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize)</span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, setsize), <span class="at">color=</span><span class="fu">as.factor</span>(setsize))) <span class="sc">+</span></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (setsize <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>)) {</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span>setsize)</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'List-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'List'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a>                  <span class="at">setsize =</span> simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize)</span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">!=</span> <span class="st">"Lead-out"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts<span class="sc">*</span><span class="dv">1000</span>, <span class="at">group=</span><span class="fu">interaction</span>(type, setsize), <span class="at">color=</span><span class="fu">as.factor</span>(setsize))) <span class="sc">+</span></span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) + +</span></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Mean Response Time"</span>) <span class="sc">+</span></span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="st">'List Length'</span>) <span class="sc">+</span></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">'Serial Position'</span>)</span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">'figures/resource_predictions.png'</span>), <span class="at">width=</span><span class="dv">5</span>, <span class="at">height=</span><span class="dv">3</span>, <span class="at">units=</span><span class="st">'in'</span>)</span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>One potential complication we discussed is that Klaus has found that he can model the running span task with a resource recovery model if he assumes that people encode items in the running span task more passively, which results in a lower depletion rate (i.e., smaller pMem parameter). I next ran the model with a range of pMem values, to make sure that the same predictions are carried out regardless if people deplete less resources in the running span task. The next simulation varies pMem from 0.15 to 0.35. We can see that this shifts the RTs up and down but doesn't change the shape of the function much. With lower learning rate, there is less of a decrement on tone RTs, but tone RTs still slow down with each item added to memory. The effect will only disappear if the learning rate gets down to 0.08</span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (pmem <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>,<span class="fl">0.25</span>, <span class="fl">0.3</span>, <span class="fl">0.35</span>)) {</span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span>pmem, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span><span class="dv">10</span>)</span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pmem =</span> pmem)</span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, pmem), <span class="at">color=</span><span class="fu">as.factor</span>(pmem))) <span class="sc">+</span></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## Predictions about ISI experiment</span></span>
+<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a>The model predicts that if we increase either the item-to-tone ISI, or the tone-to-item ISI, we should get less slow down with each item, because resources would have recovered more:</span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (memtoneISI <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.3</span>,<span class="fl">0.5</span>,<span class="fl">0.7</span>,<span class="fl">0.9</span>,<span class="fl">1.5</span>,<span class="dv">2</span>)) {</span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span><span class="dv">10</span>, <span class="at">mem_tone_ISI =</span> memtoneISI)</span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mem_tone_ISI =</span> memtoneISI)</span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, mem_tone_ISI), <span class="at">color=</span><span class="fu">as.factor</span>(mem_tone_ISI))) <span class="sc">+</span></span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (tonememISI <span class="cf">in</span> <span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.3</span>,<span class="fl">0.5</span>,<span class="fl">0.7</span>,<span class="fl">0.9</span>,<span class="fl">1.5</span>,<span class="dv">2</span>)) {</span>
+<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a>  simdat <span class="ot">&lt;-</span> <span class="fu">sim_data</span>(<span class="at">pMem=</span><span class="fl">0.3</span>, <span class="at">a=</span><span class="dv">3</span>, <span class="at">v=</span><span class="dv">40</span>, <span class="at">leadout_n=</span><span class="dv">8</span>,  <span class="at">setsize=</span><span class="dv">10</span>, <span class="at">tone_mem_ISI =</span> tonememISI)</span>
+<span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a>  DAT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">type_pos =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">'Lead-in-'</span>,<span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T)),</span>
+<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Load-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste0</span>(<span class="st">'Lead-out-'</span>, <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a>                  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">'Lead-in'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n),</span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Load'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize),</span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rep</span>(<span class="st">'Lead-out'</span>, simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sort</span>(<span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadin_n, <span class="at">decreasing =</span> T),</span>
+<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span><span class="sc">:</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>setsize,</span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">11</span><span class="sc">:</span>(<span class="dv">10</span><span class="sc">+</span>simdat<span class="sc">$</span>pars<span class="sc">$</span>leadout_n)),</span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a>                  <span class="at">rts =</span> simdat<span class="sc">$</span>rts,</span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a>                  <span class="at">strength =</span> simdat<span class="sc">$</span>tone_s,</span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tone_mem_ISI =</span> tonememISI)</span>
+<span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a>  DAT<span class="sc">$</span>rts[<span class="dv">1</span>] <span class="ot">=</span> DAT<span class="sc">$</span>rts[<span class="dv">1</span>]<span class="sc">+</span><span class="fl">0.3</span></span>
+<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat,DAT)</span>
+<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="fu">reorder</span>(type_pos,pos), rts, <span class="at">group=</span><span class="fu">interaction</span>(type, tone_mem_ISI), <span class="at">color=</span><span class="fu">as.factor</span>(tone_mem_ISI))) <span class="sc">+</span></span>
+<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_x_continuous(labels=type_pos, breaks=1:nrow(dat)) +</span></span>
+<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">60</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span>
+<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>The only difference is that if we increase the item-to-tone ISI, we also get an effect on the first tone, but we increase the tone-to-item ISI we only get effects on the subsequent tones. In contrast, I think that the reconfiguration hypothesis would predict that only increasing the mem-to-tone ISI should decrease the slow-down rate of tone_judgements with each serial positions, but that there should be no effect of the tone_to_mem ISI.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
