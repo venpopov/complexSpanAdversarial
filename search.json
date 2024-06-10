@@ -1,10 +1,21 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About",
+    "section": "",
+    "text": "Status: Work in progress\nWorking title: “An adversarial collaboration contrasting two explanations for the effect of working memory load on distractor processing during encoding and retention”\nAuthors: David Greeno, Candice C. Morey and Vencislav Popov\nLinks:\n\nProject website\nPreregistration\nGitHub repository\n\n\n\n\n\n\n\nImportant\n\n\n\nThis project uses a workflow that is designed to be reproducible on any machine and at any time. The code is organized as an R project, and the project uses the renv package to manage the R package dependencies, the targets R package to manage the execution of the workflow, and the Quarto software to write and render analysis reports as notebooks published on this website. If you are not familiar with these tools, you can follow the steps below to download the project and reproduce the analyses.",
+    "crumbs": [
+      "Home",
+      "About"
+    ]
+  },
+  {
     "objectID": "index.html#project-information",
     "href": "index.html#project-information",
     "title": "About",
-    "section": "Project information",
-    "text": "Project information\nRepository for the project “An adversarial collaboration contrasting two explanations for the effect of working memory load on distractor processing during encoding and retention”\nPreregistration: https://osf.io/d2zby\nCollaborators:\n\nDavid Greeno\nVencislav Popov\nCandice C. Morey",
+    "section": "",
+    "text": "Status: Work in progress\nWorking title: “An adversarial collaboration contrasting two explanations for the effect of working memory load on distractor processing during encoding and retention”\nAuthors: David Greeno, Candice C. Morey and Vencislav Popov\nLinks:\n\nProject website\nPreregistration\nGitHub repository\n\n\n\n\n\n\n\nImportant\n\n\n\nThis project uses a workflow that is designed to be reproducible on any machine and at any time. The code is organized as an R project, and the project uses the renv package to manage the R package dependencies, the targets R package to manage the execution of the workflow, and the Quarto software to write and render analysis reports as notebooks published on this website. If you are not familiar with these tools, you can follow the steps below to download the project and reproduce the analyses.",
     "crumbs": [
       "Home",
       "About"
@@ -15,7 +26,7 @@
     "href": "index.html#how-to-download-and-reproduce-the-analyses",
     "title": "About",
     "section": "How to download and reproduce the analyses",
-    "text": "How to download and reproduce the analyses\nYou can download the repository as a zip file and extract it on your computer, or you can clone the repository using git by running the following command in your terminal:\ngit clone https://github.com/venpopov/complexSpanAdversarial.git\nTo reproduce the analyses in this project, you will need to have R and maybe RStudio installed on your computer. You can download R from the Comprehensive R Archive Network (CRAN), and RStudio from the RStudio website. If you are not using RStudio, you need to install Quarto to render the quarto reports (this website).\nThe project is structured so that you can replicate it on any machine without having to worry about R package versions, file paths, etc. Once you have R and RStudio installed, you can open the complexSpanAdversarial.Rproj file in RStudio, which will set the working directory to the base directory of the project. We use the renv package to record the specific R packages and their versions necessary for this project. When you open the project in RStudio, the renv will first install itself (if it is not already installed). If for some reason the renv package is not installed, you can install it by running install.packages(\"renv\") in the R console.\nAfter the renv package is installed, you can install all the packages used in the project by running renv::restore(). This will install all the packages listed in the renv.lock file in a separate library specific to this project.\nWe use the targets package to manage the workflow of the project. You can run the entire workflow by running targets::tar_make(). This will generate all computational outputs in the projectm which can then be used to generate the reports or do further analyses.",
+    "text": "How to download and reproduce the analyses\n\nStep 0: Install R and RStudio\nTo reproduce the analyses in this project, you will need to have R1 and maybe RStudio installed on your computer. You can download R from the Comprehensive R Archive Network (CRAN), and RStudio from the RStudio website. If you are not using RStudio, you need to also install Quarto to render the quarto reports (this website).\n\n\nStep 1: Download the repository\nYou can download the repository as a zip file2 and extract it on your computer, or you can clone the repository using git by running the following command in your terminal3:\ngit clone https://github.com/venpopov/complexSpanAdversarial.git\nNext, navigate to the project directory:\ncd complexSpanAdversarial\n\n\nStep 2: Open the project in RStudio or another IDE\nThe project is structured so that you can replicate it on any machine without having to worry about R package versions, file paths4, etc. Once you have R and RStudio installed, you can open the complexSpanAdversarial.Rproj file in RStudio, which will set the working directory to the base directory of the project.\n\n\nStep 3: Install renv and the necessary R packages\nWe use the renv package to record the specific R packages and their versions necessary for this project. When you open the project in RStudio, renv will first install itself (if it is not already installed). If for some reason the renv package is not installed, you can install it by running install.packages(\"renv\") in the R console.\nAfter the renv package is installed, you can install all the packages used in the project by running renv::restore(). This will install all the packages listed in the renv.lock file in a separate library specific to this project.\n\n\nStep 4: Run the workflow via the targets package\nWe use the targets package to manage the code execution of the project. All the functionality of the project is organized in the R folder as custom functions which prepare the data, run the analyses, and generate the reports. The targets package is used to manage the execution of these functions in the correct order. The workflow is defined in the _targets.R file in the base directory of the project.\nYou can run the entire workflow by running targets::tar_make(). This will generate all computational outputs in the project, which can then be used to generate the reports or do further analyses.\n\n\n\n\n\n\nTips for using targets\n\n\n\nThe targets package improves reproducibility, but if you are not familiar with it, it can be a bit confusing and can obscure the code execution. Here are some tips for using targets:\n\neach tar_target function in the _targets.R file creates an R object that is saved in the targets folder\ntar_make() runs the entire workflow and generates all the outputs. This can take some time, especially if the outputs are large. Once the outputs are generated, you can run tar_make() again and it will only run the targets that have changed since the last run\nwhen working interactively or writing additional analyses in notebooks, you can load the output of each target by running tar_load(target_name) or tar_load_all() (the latter can be slow if there are many targets)\ntar_source() sources all files under the R folder. If you want to run a specific function, you can source the file and run the function directly\n\n\n\n\n\nStep 5: Render the reports\nThe reports are written in the Quarto format and are published on the project website. You can render the reports locally via one of the following methods:\n\nrun quarto render in the terminal (not the R console!) from the base directory of the project to render all the reports as html files to the _site folder\nrun quarto render docs/some_report.qmd to render a specific report (replace some_report.qmd with the name of the report you want to render)\nrun quarto::render() in the R console to render all reports from R\nclick the “Build &gt; Render website” button in RStudio to render all reports or the Render button to render a specific report you are currently viewing",
     "crumbs": [
       "Home",
       "About"
@@ -38,6 +49,17 @@
     "title": "About",
     "section": "Website navigation",
     "text": "Website navigation\nYou can find the rendered reports on the project website. The website is organized in the following sections:\n\nDevelopment notes: an unorganized collection of notebooks. These are mostly for my own reference during model development.\nNotebooks: a collection of notebooks that are more organized and presentable. These are intended to be shared with others.\nReports: a collection of reports that summarize the development of the model and the results of the model.\nFunction reference: documentation of custom functions used in the project.",
+    "crumbs": [
+      "Home",
+      "About"
+    ]
+  },
+  {
+    "objectID": "index.html#footnotes",
+    "href": "index.html#footnotes",
+    "title": "About",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe project was developed using R version 4.4.0. If you are using a different version of R, you may encounter issues with package compatibility.↩︎\nClick on the green “Code” button on the repository page, then selecting “Download ZIP”↩︎\nThis assumes you have git installed on your computer. If you don’t have git installed, you can download it from the git website.↩︎\nThe project uses relative paths, so you should be able to replicate it on any machine without having to worry about file paths. If you are not familiar with working with code structured as a project, see here.↩︎",
     "crumbs": [
       "Home",
       "About"
