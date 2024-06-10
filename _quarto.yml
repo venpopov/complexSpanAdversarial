@@ -14,7 +14,7 @@ website:
   back-to-top-navigation: true
   page-navigation: true
   bread-crumbs: false
-  repo-url: ""
+  repo-url: "https://github.com/venpopov/complexSpanAdversarial"
   search: true
   navbar:
     left:
@@ -24,9 +24,9 @@ website:
       - icon: github
         menu:
           - text: Source Code
-            href: ""
+            href: "https://github.com/venpopov/complexSpanAdversarial"
           - text: Report a Bug
-            href: ""
+            href: "https://github.com/venpopov/complexSpanAdversarial/issues"
   sidebar: 
     collapse-level: 1
     title: "Index"
